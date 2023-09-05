@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(of = "id")
 public class Remedio {
     public Remedio(DadosCadastroRemedio dados) {
+        this.ativo = true;
         this.nome = dados.nome();
         this.via = dados.via();
         this.lote = dados.lote();
@@ -27,12 +28,17 @@ public class Remedio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
     @Enumerated(EnumType.STRING)
     private Via via;
+
     private String lote;
     private int quantidade;
     private LocalDate validade;
+    private boolean ativo;
+
     @Enumerated(EnumType.STRING)
     private Laboratorio laboratorio;
 
@@ -47,5 +53,13 @@ public class Remedio {
         if (dados.laboratorio() != null) {
             this.laboratorio = dados.laboratorio();
         }
+    }
+
+    public void inativar() {
+        this.ativo = false;
+    }
+
+    public void ativar() {
+        this.ativo = true;
     }
 }
